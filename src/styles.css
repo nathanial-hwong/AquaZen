@@ -1,0 +1,60 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f3f3f3;
+}
+
+h1, h2 {
+    color: #333;
+}
+
+.payment-options label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: bold;
+}
+
+.payment-options input[type="radio"] {
+    display: inline-block; /* Display radio buttons inline */
+    vertical-align: middle; /* Vertically align radio buttons with text */
+    margin-right: 10px; /* Add spacing between radio buttons and text */
+}
+
+label {
+    display: block;
+    margin-bottom: 5px;
+}
+
+select, input[type="text"] {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+}
+
+button {
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #0056b3;
+}
+
+#scanned-products {
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+#scanned-products p {
+    margin: 5px 0;
+}
