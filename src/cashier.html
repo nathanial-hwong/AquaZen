@@ -5,6 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Fish Store Cashier System</title>
     <link rel="stylesheet" href="styles.css"> <!-- Link to your CSS file -->
+    <script src="script.js"></script>
 </head>
 <body>
     <h1>Fish Store Cashier System</h1>
@@ -34,6 +35,9 @@
 <div id="scanned-products">
     <!-- Product details will be displayed here -->
 </div>
+ <!-- Total -->
+ <h2>Total:</h2>
+ <p id="total">Total: $0</p>
 
     <!-- Add Custom Product -->
     <h2>Add Custom Product:</h2>
@@ -53,53 +57,5 @@
     <!-- Submit Button (unchanged) -->
     <!-- ... -->
 
-    <script>
-        function addCustomProduct() {
-    // Retrieve values from input fields
-    var productName = document.getElementById("product-name").value;
-    var customProductName = document.getElementById("custom-product-name").value;
-    var price = document.getElementById("custom-price").value;
-    var amount = document.getElementById("custom-amount").value;
-
-    // Create a new product element
-    var productElement = document.createElement("p");
-
-    // Determine the displayed product name
-    var displayedProductName = productName === "other" && customProductName ? customProductName : productName;
-
-    // Set the product details text
-    productElement.textContent = displayedProductName + " - $" + price + " x " + amount;
-
-    // Create a remove button for the product
-    var removeButton = document.createElement("button");
-    removeButton.textContent = "Remove";
-    removeButton.onclick = function() {
-        productElement.remove(); // Remove the product when the button is clicked
-    };
-
-    // Append the remove button to the product element
-    productElement.appendChild(removeButton);
-
-    // Append the product element to the scanned products section
-    document.getElementById("scanned-products").appendChild(productElement);
-}
-
-    function clearCustomFields() {
-        document.getElementById("product-name").value = "";
-        document.getElementById("custom-product-name").value = "";
-        document.getElementById("custom-price").value = "";
-        document.getElementById("custom-amount").value = "";
-    }
-        function submitPayment() {
-            // Add functionality to submit payment
-            alert("Payment submitted!");
-        }
-        function removeProduct(button) {
-        // Get the parent <p> element containing the product details
-        var productElement = button.parentNode;
-        // Remove the product from the DOM
-        productElement.remove();
-    }
-    </script>
 </body>
 </html>
