@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill</title>
+    <link rel="stylesheet" href="bill_styles.css"> <!-- Link to your CSS file -->
+</head>
+<body>
+    <div class="container">
+        <!-- Company Logo -->
+        <div class="company-logo">
+            <img src="aquazen.png" alt="AquaZen Logo">
+        </div>
+
+        <!-- Company Address and Phone Number -->
+        <div class="company-address">
+            <p>AquaZen</p>
+            <p>5579 BLVD. MARICOURT</p>
+            <p>SAINT-HUBERT, QC J3Y 7M2</p>
+            <p>Phone: (450)-812-6680</p>
+        </div>
+
+        <!-- List of Items and Prices -->
+        <div class="items" id="item-list">
+            <!-- JavaScript will populate this section -->
+        </div>
+
+        <!-- Subtotal, Tax, and Total -->
+        <div class="subtotal" id="subtotal">
+            <!-- JavaScript will populate this section -->
+        </div>
+
+        <!-- Additional Information -->
+        <div class="additional-info">
+            <p>AUCUN REMBOURSEMENT NI GARANTIS SUR LE STOCK VIVANT</p>
+            <p>AQUAZEN INC</p>
+            <p>1178059318</p>
+            <p>TVQ: 1230010508 TQ 0001</p>
+            <p>TPS: 797654613 RT 0001</p>
+        </div>
+    </div>
+
+    <script>
+        // Retrieve parameters from URL
+        const urlParams = new URLSearchParams(window.location.search);
+
+        // Initialize subtotal
+        let subtotal = 0;
+
+        // Retrieve items from URL parameters and populate the item list
+        const itemListDiv = document.getElementById("item-list");
+        urlParams.forEach((value, key) => {
+            if (key.startsWith("itemName")) {
+                const index = parseInt(key.replace("itemName", ""));
+                const itemName = value;
+                const itemPrice = parseFloat(urlParams.get("itemPrice" + index));
+                const itemQuantity = parseInt(urlParams.get("itemQuantity" + index));
+
+                // Calculate total price for the item
+                const totalPrice = itemPrice * itemQuantity;
+                subtotal += totalPrice;
+
+                // Create paragraph element for the item and append to the item list
+                const itemParagraph = document.createElement("p");
+                itemParagraph.textContent = `${itemName}: $${itemPrice.toFixed(2)} x ${itemQuantity} = $${totalPrice.toFixed(2)}`;
+                itemListDiv.appendChild(itemParagraph);
+            }
+        });
+
+        // Populate the subtotal section
+        const subtotalDiv = document.getElementById("subtotal");
+        subtotalDiv.innerHTML = `
+            <p>Subtotal: $${subtotal.toFixed(2)}</p>
+            <p>Quebec Provincial Tax (TVQ): $${(subtotal * 0.1).toFixed(2)}</p>
+            <p>Canada GST (TPS): $${(subtotal * 0.05).toFixed(2)}</p>
+            <p>Total: $${(subtotal + (subtotal * 0.15)).toFixed(2)}</p>
+        `;
+    </script>
+</body>
+</html>

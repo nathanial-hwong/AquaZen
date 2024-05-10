@@ -41,21 +41,18 @@
 
     <!-- Add Custom Product -->
     <h2>Add Custom Product:</h2>
-    <label for="product-name">Product Name:</label>
-    <select id="product-name">
-        <option value="livestock">Livestock</option>
-        <option value="other">Other</option>
-    </select>
-    <input type="text" id="custom-product-name" placeholder="Custom Product Name">
+    <label for="product-name">Product Barcode/Name</label>
+    <input type="text" id="barcode-or-name" placeholder="Enter Product Info">
     <label for="custom-price">Price:</label>
-    <input type="text" id="custom-price">
+    <input type="text" id="custom-price" placeholder="Type Here For Manual Entry">
     <label for="custom-amount">Amount:</label>
     <input type="text" id="custom-amount">
     <button onclick="addCustomProduct()">Add Product</button>
     <button onclick="clearCustomFields()">Clear</button>
 
-    <!-- Submit Button (unchanged) -->
-    <!-- ... -->
-
+    <!-- Submit Button -->
+    <button onclick="submitPayment()">Submit Payment</button>
+    <!-- Link to Bill -->
+    <button onclick="viewBill()">View Bill</button>
 </body>
 </html>

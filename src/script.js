@@ -1,7 +1,20 @@
+//calls add customproduct if enter key is pressed in product name field (for scanner to work)
+document.addEventListener("DOMContentLoaded", function() {
+    // Add event listener here
+    document.getElementById("barcode-or-name").addEventListener("keypress", function(event) {
+        // Check if the pressed key is "Enter"
+        if (event.key === "Enter") {
+            // Prevent the default behavior of the Enter key (e.g., submitting a form)
+            event.preventDefault();
+            
+            // Add the product
+            addCustomProduct();
+        }
+    });
+});
 function addCustomProduct() {
     // Retrieve values from input fields
-    var productName = document.getElementById("product-name").value;
-    var customProductName = document.getElementById("custom-product-name").value;
+    var barcodeOrName = document.getElementById("barcode-or-name").value;
     var price = document.getElementById("custom-price").value;
     var amount = document.getElementById("custom-amount").value;
 
@@ -13,11 +26,8 @@ function addCustomProduct() {
     // Create a new product element
     var productElement = document.createElement("p");
 
-    // Determine the displayed product name
-    var displayedProductName = productName === "other" && customProductName ? customProductName : productName;
-
     // Set the product details text
-    productElement.textContent = displayedProductName + " - $" + price + " x " + amount;
+    productElement.textContent = barcodeOrName + " - $" + price + " x " + amount;
 
     // Create a remove button for the product
     var removeButton = document.createElement("button");
@@ -40,6 +50,12 @@ function addCustomProduct() {
     clearCustomFields();
 }
 
+function clearCustomFields() {
+    document.getElementById("barcode-or-name").value = "";
+    document.getElementById("custom-price").value = "";
+    document.getElementById("custom-amount").value = "";
+}
+
 function updateTotal() {
     var total = 0;
     var products = document.getElementById("scanned-products").getElementsByTagName("p");
@@ -52,19 +68,53 @@ function updateTotal() {
     document.getElementById("total").textContent = "Total: $" + total.toFixed(2);
 }
 
-function clearCustomFields() {
-    document.getElementById("product-name").value = "livestock";
-    document.getElementById("custom-product-name").value = "";
-    document.getElementById("custom-price").value = "";
-    document.getElementById("custom-amount").value = "";
+function submitPayment() {
+    // Add functionality to submit payment
+    alert("Payment submitted!");
 }
-    function submitPayment() {
-        // Add functionality to submit payment
-        alert("Payment submitted!");
-    }
-    function removeProduct(button) {
+
+function removeProduct(button) {
     // Get the parent <p> element containing the product details
     var productElement = button.parentNode;
     // Remove the product from the DOM
     productElement.remove();
+}
+
+function viewBill() {
+    // Get all the product elements
+    var products = document.getElementById("scanned-products").getElementsByTagName("p");
+    
+    // Initialize arrays to store the details of each item
+    var itemNames = [];
+    var itemPrices = [];
+    var itemQuantities = [];
+
+    // Iterate over each product element
+    for (var i = 0; i < products.length; i++) {
+        var productText = products[i].textContent;
+        var itemName = productText.split(" - ")[0]; // Extract item name
+        var price = parseFloat(productText.split("$")[1].split(" x ")[0]); // Extract price
+        var quantity = parseFloat(productText.split(" x ")[1]); // Extract quantity
+
+        // Add item details to the respective arrays
+        itemNames.push(itemName);
+        itemPrices.push(price);
+        itemQuantities.push(quantity);
+    }
+
+    // Calculate subtotal
+    var subtotal = itemPrices.reduce((acc, price, index) => acc + price * itemQuantities[index], 0);
+
+    // Construct the URL for the bill page with the necessary parameters
+    var billURL = "bill.html?";
+    // Append each item's details and subtotal to the URL as parameters
+    itemNames.forEach(function(itemName, index) {
+        billURL += "itemName" + (index + 1) + "=" + encodeURIComponent(itemName) + "&";
+        billURL += "itemPrice" + (index + 1) + "=" + encodeURIComponent(itemPrices[index]) + "&";
+        billURL += "itemQuantity" + (index + 1) + "=" + encodeURIComponent(itemQuantities[index]) + "&";
+    });
+    billURL += "subtotal=" + encodeURIComponent(subtotal);
+
+    // Redirect to the bill page
+    window.location.href = billURL;
 }
