@@ -1,0 +1,4 @@
+1- put new "products_export_1" file in folder (will not work if the file has a different name)
+2- Delete columns B,C,G
+3- Remove database.csv file from folder if there is one
+4- Run the batch file
