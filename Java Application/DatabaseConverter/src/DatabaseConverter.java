@@ -22,7 +22,7 @@ public class DatabaseConverter {
 			System.exit(0);
 		}
 		try {
-			File database = new File("database.csv");
+			File database = new File("database.txt");
 			p = new PrintWriter(new FileOutputStream(database));
 		}
 		catch(IOException e) {
@@ -37,20 +37,26 @@ public class DatabaseConverter {
 		int x = 1;
 		int numWithCode = 0;
 		//iterate through entire exports files
-		String output;
+		String output="";
 		while(s.hasNextLine()) {
 			temp = s.nextLine().split(",");
 			if (temp[attributes[3]]!="(Blanks)"&&temp[attributes[3]].length()>0) {
-				output = (temp[attributes[0]]+","+temp[attributes[1]]+","+temp[attributes[2]]+","+temp[attributes[3]]+","+temp[attributes[4]]);
-				if(temp[attributes[1]].length()>0) {
+				for (int i = 0;i<attributes.length;i++) {
+					if (attributes[i]<=temp.length) {
+						if (i != attributes.length-1)output = output.concat(temp[attributes[i]]+",");
+						else output = output.concat(temp[attributes[i]]);
+					}
 				}
+				/*if(temp[attributes[1]].length()>0) {
+				}*/
 				p.println(output);
+				output = "";
 				numWithCode++;
 			}
 			x++;
 		}
 		
-		System.out.println("There are "+numWithCode+"products with barcodes.");
+		System.out.println("There are "+numWithCode+" products with barcodes.");
 		/**try {
 			System.out.println(readAllLines());
 		} catch (Exception e) {
@@ -65,12 +71,13 @@ public class DatabaseConverter {
 	public static int[] getIndexes(String[] s) {
 		int[] att = new int[5];
 		for (int i = 0; i<s.length;i++) {
-			if(s[i].equals("Handle"))att[0] = i;
-			if(s[i].equals("Vendor"))att[1] = i;
-			if(s[i].equals("Variant Price"))att[2] = i;
-			if(s[i].equals("Variant Barcode"))att[3] = i;
-			if(s[i].equals("Cost per item"))att[4] = i;
+			if(s[i].contains("Handle"))att[0] = i;
+			if(s[i].contains("Vendor"))att[1] = i;{}
+			if(s[i].contains("Variant Price"))att[2] = i;
+			if(s[i].contains("Variant Barcode"))att[3] = i;
+			if(s[i].contains("Cost per item"))att[4] = i;
 		}
+		System.out.println("Indexes are:"+att[0]+" "+att[1]+" "+att[2]+" "+att[3]+" "+att[4]);
 		return att;
 		
 	}
