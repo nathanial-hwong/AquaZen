@@ -12,7 +12,6 @@ public class CashierSystem {
 	public static void ui(TransactionsHandler p) {
 		boolean active = true;
 		String input = "";
-		String convertedInput = "";
 		boolean found = false;
 		Scanner keyboard = new Scanner(System.in);
 		while(active) {
@@ -32,11 +31,8 @@ public class CashierSystem {
 				p.loadBackup();
 				continue;
 			}
-			else if(input.contains(".")&&input.contains("E+")) {
-				convertedInput = toBarcode(input);
-			}
 			for (int i = 0;i<p.nProducts;i++) {
-				if (p.products[i][p.barcode].contains(input)||p.products[i][p.barcode].contains(convertedInput)) {
+				if (p.products[i][p.barcode].contains(input)) {
 					System.out.println("Product name is: "+p.products[i][p.name]+"\n");
 					p.addProduct(i);
 					found = true;

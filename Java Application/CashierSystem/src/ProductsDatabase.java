@@ -12,7 +12,7 @@ public class ProductsDatabase {
 	public ProductsDatabase(){
 		Scanner read = null;
 		Scanner init = null;
-		database = "database.csv";
+		database = "database.txt";
 		try {
 			read = new Scanner(new FileInputStream(database));
 			init = new Scanner(new FileInputStream(database));
